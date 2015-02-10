@@ -14,7 +14,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     private boolean inInterval = false;
     private long lastPressTime = 0;
     private int lastKeyIndex = 0;
-    private int keyboardCase = 0; //0 = lowercase, 1 = UPPERCASE, 2 = NUM3R1C
+    private int keyboardCase = 0; //0 = lowercase, 1 = UPPERCASE, 2 = NUM3R1C, 3 = $¥MB0L!C
 
     public int getLastKeyCode() {
         return lastKeyCode;
@@ -117,10 +117,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_1:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'.', ',', '?', '!', '1', ':', '-', '_', '(', ')', '/', '\'', '"'};
-                    } else {
-                        keyChars = new char[]{'1'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'.', ',', '?', '!', '1', ':', '-', ';', '_', '(', ')', '@', '/', '\'', '"'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'«','»','<','>','[',']','{','}'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'1'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -128,10 +136,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_2:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'a', 'b', 'c', '2', 'á', 'ä', 'č', '@', '&'};
-                    } else {
-                        keyChars = new char[]{'2'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'a', 'b', 'c', '2', 'á', 'ä', 'č', '@', '&'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'à','â','æ','ç','©'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'2'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -139,10 +155,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_3:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'d', 'e', 'f', '3', 'ď', 'é', 'ě', 'ë', '€'};
-                    } else {
-                        keyChars = new char[]{'3'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'d', 'e', 'f', '3', 'ď', 'é', 'ě', 'ë', '€'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'è','ê','♫'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'3'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -150,10 +174,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_4:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'g', 'h', 'i', '4', 'í', 'ï'};
-                    } else {
-                        keyChars = new char[]{'4'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'g', 'h', 'i', '4', 'í', 'ï'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'ì','î','♀','♂'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'4'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -161,10 +193,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_5:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'j', 'k', 'l', '5', '+', '-', '/', '*', '%'};
-                    } else {
-                        keyChars = new char[]{'5'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'j', 'k', 'l', '5', '+', '-', '/', '*', '%'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'~','%','\\','^','|','±','¯'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'5'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -172,10 +212,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_6:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'m', 'n', 'o', '6', 'ň', 'ó', 'ö'};
-                    } else {
-                        keyChars = new char[]{'6'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'m', 'n', 'o', '6', 'ň', 'ó', 'ö'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'ò','ô','õ'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'6'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -183,10 +231,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_7:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'p', 'q', 'r', 's', '7', 'ř', 'š', '$'};
-                    } else {
-                        keyChars = new char[]{'7'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'p', 'q', 'r', 's', '7', 'ř', 'š', '$'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'§','º','²','³','♠','♣','♥','♦'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'7'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -194,10 +250,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_8:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'t', 'u', 'v', '8', 'ť', 'ú', 'ů', 'ü'};
-                    } else {
-                        keyChars = new char[]{'8'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'t', 'u', 'v', '8', 'ť', 'ú', 'ů', 'ü'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'ù','û','µ','Ω','™'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'8'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -205,10 +269,18 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_9:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{'w', 'x', 'y', 'z', '9', 'ý', 'ž'};
-                    } else {
-                        keyChars = new char[]{'9'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{'w', 'x', 'y', 'z', '9', 'ý', 'ž'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'¢','£','¥','¤'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'9'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
@@ -216,12 +288,26 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
                     return true;
                 case KeyEvent.KEYCODE_STAR:
-                    return false;
+                    if(getKeyboardCase()==3) {
+                        setKeyboardCase(0);
+                    }
+                    else {
+                        setKeyboardCase(3);
+                    }
+                    return true;
                 case KeyEvent.KEYCODE_0:
-                    if (getKeyboardCase() != 2) {
-                        keyChars = new char[]{' ', '0', '\n'};
-                    } else {
-                        keyChars = new char[]{'0'};
+                    switch(getKeyboardCase()) {
+                        case 0:
+                        case 1:
+                            keyChars = new char[]{' ', '0', '\n'};
+                            break;
+                        case 3:
+                            keyChars = new char[]{'٠','١','٢','٣','٤','٥','٦','٧','٨','٩'};
+                            break;
+                        case 2:
+                        default:
+                            keyChars = new char[]{'0'};
+                            break;
                     }
 
                     charIndex(keyChars.length);
