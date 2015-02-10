@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Simtelep HW keyboard</string>
+    <string name="simple_ime">Simtelep 12-keys</string>
+    <string name="subtype_cs_CZ">Czech</string>
+</resources>

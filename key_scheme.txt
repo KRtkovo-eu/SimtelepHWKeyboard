@@ -1,0 +1,19 @@
+Nokia keyboard schema for Simtelep
+==================================
+Key:Values
+1:.,?!1:-_()/'"
+2:abc2áäč@&
+3:def3ďéěë€
+4:ghi4í
+5:jkl5+-/*%
+6:mno6ňóö
+7:pqrs7řš$
+8:tuv8ťúůü
+9:wxyz9ýž
+*:{TABLE WITH SYMBOLS}
+0: 0{NEWLINE}
+#:{abc}{ABC}{123}
+
+Catch pressed number key (0-9,STAR,POUND), choose correct array with chars, remember position, wait some interval for next press.
+If is the same key in interval, then replace char with next one.
+If number key is holded, then after X ms write its number and interrupt waiting for key press function.
