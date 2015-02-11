@@ -20,6 +20,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     private boolean isLongPress = false;
     private char[] keyChars;
     private char[] numChars;
+
+
     public int getLastKeyCode() {
         return lastKeyCode;
     }
@@ -56,6 +58,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     public void setIsLongPress(boolean isLongPress) {
         this.isLongPress = isLongPress;
     }
+
+
     public char caseChar(char writeThis) {
         switch(getKeyboardCase()) {
             case 0:
@@ -70,6 +74,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         }
         return writeThis;
     }
+
     public void writeChar(char keySet) {
         InputConnection ic = getCurrentInputConnection();
         if(getInInterval() && !getIsLongPress()) {
@@ -78,6 +83,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         keySet = caseChar(keySet);
         ic.commitText(String.valueOf(keySet), 1);
     }
+
     public void charIndex(int arrayLength) {
         if(getInInterval() && !getIsLongPress()) {
             if(getLastKeyIndex() == (arrayLength-1)) {
@@ -91,55 +97,60 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
             setLastKeyIndex(0);
         }
     }
+
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(50);
-        setIsLongPress(true);
+        if(isInputViewShown()) {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(50);
+            setIsLongPress(true);
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_1:
-                numChars = new char[]{'1'};
-                return true;
-            case KeyEvent.KEYCODE_2:
-                numChars = new char[]{'2'};
-                return true;
-            case KeyEvent.KEYCODE_3:
-                numChars = new char[]{'3'};
-                return true;
-            case KeyEvent.KEYCODE_4:
-                numChars = new char[]{'4'};
-                return true;
-            case KeyEvent.KEYCODE_5:
-                numChars = new char[]{'5'};
-                return true;
-            case KeyEvent.KEYCODE_6:
-                numChars = new char[]{'6'};
-                return true;
-            case KeyEvent.KEYCODE_7:
-                numChars = new char[]{'7'};
-                return true;
-            case KeyEvent.KEYCODE_8:
-                numChars = new char[]{'8'};
-                return true;
-            case KeyEvent.KEYCODE_9:
-                numChars = new char[]{'9'};
-                return true;
-            case KeyEvent.KEYCODE_0:
-                numChars = new char[]{'0'};
-                return true;
-            case KeyEvent.KEYCODE_STAR:
-                numChars = new char[]{'*'};
-                return true;
-            case KeyEvent.KEYCODE_POUND:
-                numChars = new char[]{'#'};
-                return true;
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_1:
+                    numChars = new char[]{'1'};
+                    return true;
+                case KeyEvent.KEYCODE_2:
+                    numChars = new char[]{'2'};
+                    return true;
+                case KeyEvent.KEYCODE_3:
+                    numChars = new char[]{'3'};
+                    return true;
+                case KeyEvent.KEYCODE_4:
+                    numChars = new char[]{'4'};
+                    return true;
+                case KeyEvent.KEYCODE_5:
+                    numChars = new char[]{'5'};
+                    return true;
+                case KeyEvent.KEYCODE_6:
+                    numChars = new char[]{'6'};
+                    return true;
+                case KeyEvent.KEYCODE_7:
+                    numChars = new char[]{'7'};
+                    return true;
+                case KeyEvent.KEYCODE_8:
+                    numChars = new char[]{'8'};
+                    return true;
+                case KeyEvent.KEYCODE_9:
+                    numChars = new char[]{'9'};
+                    return true;
+                case KeyEvent.KEYCODE_0:
+                    numChars = new char[]{'0'};
+                    return true;
+                case KeyEvent.KEYCODE_STAR:
+                    numChars = new char[]{'*'};
+                    return true;
+                case KeyEvent.KEYCODE_POUND:
+                    numChars = new char[]{'#'};
+                    return true;
+            }
         }
         return false;
     }
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         event.startTracking();
-        if (PROCESS_HARD_KEYS) {
+        if (isInputViewShown()) {
             long now = SystemClock.uptimeMillis();
             if ((keyCode != getLastKeyCode()) || (getKeyboardCase() == 2)) {
                 setLastKeyCode(keyCode);
@@ -326,42 +337,36 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
                     }
                     return true;
                 case KeyEvent.KEYCODE_F1:
-                    if(isInputViewShown()) {
                         sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
                         return true;
-                    }
-                    else {
-                        sendDownUpKeyEvents(KeyEvent.KEYCODE_SETTINGS);
-                        return true;
-                    }
                 case KeyEvent.KEYCODE_SEARCH:
-                    if(isInputViewShown()) {
                         sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
                         return true;
-                    }
-                    else {
-                        return false;
-                    }
             }
         }
         return super.onKeyDown(keyCode, event);
     }
-    @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(getIsLongPress()) {
-            keyChars = numChars;
-            numChars = null;
-            setLastKeyCode(KeyEvent.KEYCODE_NUM);
-        }
-        if(keyChars != null) {
-            charIndex(keyChars.length);
-            writeChar(keyChars[getLastKeyIndex()]);
-            keyChars = null;
 
-            setIsLongPress(false);
-            return true;
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(isInputViewShown()) {
+            if (getIsLongPress()) {
+                keyChars = numChars;
+                numChars = null;
+                setLastKeyCode(KeyEvent.KEYCODE_NUM);
+            }
+            if (keyChars != null) {
+                charIndex(keyChars.length);
+                writeChar(keyChars[getLastKeyIndex()]);
+                keyChars = null;
+
+                setIsLongPress(false);
+                return true;
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
+
     @Override
     public void onPress(int primaryCode) {
     }
